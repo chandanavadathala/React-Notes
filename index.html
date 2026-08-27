@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>React JS Interview Notes</title>
+<style>
+  @page { margin: 20mm 16mm 20mm 16mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+    color: #23272f;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+  .cover {
+    height: 257mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(160deg, #1e293b 0%, #0f172a 60%, #111827 100%);
+    color: white;
+    page-break-after: always;
+    border-radius: 6px;
+  }
+  .cover .badge {
+    font-size: 13pt;
+    letter-spacing: 4px;
+    color: #facc15;
+    margin-bottom: 18px;
+    font-weight: 600;
+  }
+  .cover h1 {
+    font-size: 34pt;
+    margin: 0 0 10px 0;
+    font-weight: 800;
+  }
+  .cover h2 {
+    font-size: 15pt;
+    font-weight: 400;
+    color: #cbd5e1;
+    margin: 0 0 40px 0;
+  }
+  .cover .stats {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+  }
+  .cover .stat {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 14px 22px;
+    border-radius: 10px;
+    min-width: 100px;
+  }
+  .cover .stat .num { font-size: 20pt; font-weight: 700; color: #facc15; }
+  .cover .stat .lbl { font-size: 8.5pt; color: #cbd5e1; margin-top: 4px; }
+
+  .toc { page-break-after: always; }
+  .toc h1 { color: #0f172a; border-bottom: 3px solid #facc15; padding-bottom: 8px; }
+  .toc-level { font-weight: 700; color: #1e293b; margin-top: 16px; font-size: 12pt; }
+  .toc ol { columns: 2; -webkit-columns: 2; column-gap: 30px; padding-left: 18px; margin: 6px 0 0 0; }
+  .toc ol li { font-size: 9.5pt; margin-bottom: 3px; break-inside: avoid; color: #334155; }
+
+  .level-divider {
+    page-break-before: always;
+    background: linear-gradient(120deg, #1e293b, #334155);
+    color: white;
+    border-radius: 8px;
+    padding: 26px 30px;
+    margin-bottom: 20px;
+  }
+  .level-divider h1 { margin: 0; font-size: 20pt; }
+  .level-divider p { margin: 6px 0 0 0; color: #cbd5e1; font-size: 10pt; }
+
+  .topic {
+    page-break-inside: avoid;
+    margin-bottom: 22px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .topic-header {
+    background: #0f172a;
+    color: white;
+    padding: 8px 14px;
+    font-size: 12pt;
+    font-weight: 700;
+  }
+  .topic-header .num {
+    display: inline-block;
+    background: #facc15;
+    color: #0f172a;
+    font-size: 9pt;
+    font-weight: 800;
+    padding: 1px 8px;
+    border-radius: 10px;
+    margin-right: 8px;
+  }
+  .topic-body { padding: 10px 16px 14px 16px; }
+
+  .def {
+    background: #f8fafc;
+    border-left: 3px solid #334155;
+    padding: 8px 12px;
+    margin: 6px 0 10px 0;
+    font-size: 10pt;
+  }
+
+  .keypoints { margin: 8px 0; }
+  .keypoints .title { font-weight: 700; color: #0f172a; font-size: 9.5pt; margin-bottom: 4px; }
+  .keypoints ul { margin: 0; padding-left: 18px; }
+  .keypoints li { margin-bottom: 2px; font-size: 9.5pt; }
+
+  pre {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 8.7pt;
+    overflow-x: auto;
+    margin: 8px 0;
+    font-family: 'Consolas', 'Courier New', monospace;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  code.inline {
+    background: #eef2f7;
+    color: #b91c1c;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 9pt;
+  }
+
+  .qa { margin-top: 8px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 8px 12px; }
+  .qa .title { font-weight: 700; color: #92400e; font-size: 9.5pt; margin-bottom: 4px; }
+  .qa .q { font-weight: 600; font-size: 9.5pt; color: #1e293b; margin-top: 6px; }
+  .qa .a { font-size: 9.5pt; color: #334155; margin: 2px 0 0 0; }
+
+  .remember { margin-top: 8px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 6px; padding: 8px 12px; }
+  .remember .title { font-weight: 700; color: #065f46; font-size: 9.5pt; margin-bottom: 4px; }
+  .remember ul { margin: 0; padding-left: 18px; }
+  .remember li { font-size: 9.5pt; margin-bottom: 2px; }
+
+  .footer-note { text-align: center; color: #94a3b8; font-size: 8pt; margin-top: 6px; }
+</style>
+  .tag {
+    display: inline-block;
+    font-size: 7.5pt;
+    font-weight: 700;
+    padding: 1px 8px;
+    border-radius: 8px;
+    margin-left: 8px;
+  }
+  .tag.must { background: #fee2e2; color: #991b1b; }
+  .tag.next { background: #dbeafe; color: #1e40af; }
+  .tag.aware { background: #ede9fe; color: #5b21b6; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="badge">FRESHER INTERVIEW PREP</div>
+  <h1>React JS Interview Notes</h1>
+  <h2>Complete Cheat Sheet &mdash; Definitions, Code &amp; Interview Q&amp;A</h2>
+  <div class="stats">
+    <div class="stat"><div class="num">60+</div><div class="lbl">TOPICS</div></div>
+    <div class="stat"><div class="num">9</div><div class="lbl">SECTIONS</div></div>
+    <div class="stat"><div class="num">50+</div><div class="lbl">Q&amp;A</div></div>
+  </div>
+</div>
+
+<div class="toc">
+<h1>Table of Contents</h1>
+
+<div class="toc-level">A &mdash; React Fundamentals &amp; JSX</div>
+<ol>
+<li>What is React? Why React?</li>
+<li>Virtual DOM &amp; Reconciliation</li>
+<li>JSX</li>
+<li>Components &amp; Functional Components</li>
+<li>React Project Setup (npm, package.json, createRoot)</li>
+</ol>
+
+<div class="toc-level">B &mdash; Components, Props &amp; State</div>
+<ol>
+<li>Props (incl. children, defaults)</li>
+<li>State &amp; useState</li>
+<li>State Immutability &amp; Updating Nested Data</li>
+<li>Conditional Rendering</li>
+<li>Lists, Keys &amp; Rendering Arrays</li>
+<li>Events &amp; Event Object</li>
+<li>Forms &amp; Controlled Components</li>
+</ol>
+
+<div class="toc-level">C &mdash; Hooks Deep Dive</div>
+<ol>
+<li>Rules of Hooks</li>
+<li>useEffect (deps, cleanup, API calls)</li>
+<li>useRef</li>
+<li>useReducer</li>
+<li>useMemo &amp; useCallback</li>
+<li>Custom Hooks</li>
+</ol>
+
+<div class="toc-level">D &mdash; Component Communication &amp; State Management</div>
+<ol>
+<li>Prop Drilling &amp; Lifting State Up</li>
+<li>Context API</li>
+<li>Redux &amp; Redux Toolkit (basics)</li>
+</ol>
+
+<div class="toc-level">E &mdash; Routing</div>
+<ol>
+<li>React Router essentials</li>
+<li>Dynamic &amp; Nested Routes</li>
+<li>Protected Routes</li>
+</ol>
+
+<div class="toc-level">F &mdash; API Integration &amp; Auth</div>
+<ol>
+<li>Fetch / Axios, HTTP methods</li>
+<li>Loading &amp; Error States</li>
+<li>Authentication (JWT, tokens, protected routes)</li>
+</ol>
+
+<div class="toc-level">G &mdash; Performance &amp; Error Handling</div>
+<ol>
+<li>Why components re-render</li>
+<li>React.memo, useMemo, useCallback</li>
+<li>Lazy Loading &amp; Code Splitting</li>
+<li>Error Boundaries</li>
+<li>Debouncing &amp; Throttling</li>
+</ol>
+
+<div class="toc-level">H &mdash; Modern React &amp; Ecosystem Awareness</div>
+<ol>
+<li>React Lifecycle (class vs hooks)</li>
+<li>Strict Mode, Suspense, SSR/CSR/Hydration</li>
+<li>Project Structure, Git, Testing, Deployment (quick reference)</li>
+<li>JavaScript-for-React quick recap</li>
+</ol>
+
+<div class="toc-level">I &mdash; Rapid-Fire Interview Q&amp;A Bank</div>
+<ol>
+<li>35+ most-asked React interview questions, answered short &amp; sharp</li>
+</ol>
+</div>
+
+<div class="level-divider">
+<h1>Section A &mdash; React Fundamentals &amp; JSX</h1>
+<p>The "what and why" of React. Interviewers often open with these.</p>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">1</span>What is React? Why React?<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">React is a JavaScript <b>library</b> (not a framework) for building fast, interactive user interfaces using a component-based architecture.</div>
+<div class="keypoints">
+<div class="title">Key Points</div>
+<ul>
+<li>Built by Facebook (Meta); uses a <b>Virtual DOM</b> for efficient UI updates.</li>
+<li>Component-based: UI is broken into small, reusable, independent pieces.</li>
+<li>Declarative: you describe <i>what</i> the UI should look like for a given state, React handles the <i>how</i>.</li>
+<li>Used to build SPAs (Single Page Applications) — one HTML page, content updates dynamically without full reloads.</li>
+</ul>
+</div>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: Is React a framework or a library?</div>
+<div class="a">A: A library — it only handles the view layer (UI). Routing, state management, etc. come from separate libraries (React Router, Redux) that you choose and plug in yourself, unlike an opinionated framework like Angular.</div>
+<div class="q">Q: What problem does React solve?</div>
+<div class="a">A: Manually manipulating the DOM for complex, frequently-updating UIs is slow and error-prone. React lets you declare UI as a function of state, and efficiently updates only what changed.</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">2</span>Virtual DOM &amp; Reconciliation<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">The <b>Virtual DOM</b> is a lightweight JS object representation of the real DOM kept in memory. <b>Reconciliation</b> is React's algorithm for comparing (diffing) the new Virtual DOM with the previous one and updating only the changed parts of the real DOM.</div>
+<div class="keypoints">
+<div class="title">Key Points</div>
+<ul>
+<li>Real DOM updates are slow; Virtual DOM diffing minimizes expensive direct DOM manipulation.</li>
+<li>React uses a "diffing algorithm" to find the minimal set of changes needed.</li>
+<li>The <code class="inline">key</code> prop helps React identify which list items changed/moved/were removed during reconciliation.</li>
+</ul>
+</div>
+<pre>// When state changes, React:
+// 1. Re-renders the component -&gt; creates a new Virtual DOM tree
+// 2. Diffs it against the previous Virtual DOM tree
+// 3. Calculates the minimal set of real DOM changes
+// 4. Applies ("commits") only those changes to the actual DOM</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: Why is Virtual DOM faster than direct DOM manipulation?</div>
+<div class="a">A: Because comparing lightweight JS objects in memory is much cheaper than repeatedly triggering real browser reflow/repaint; React batches and applies only the minimal necessary real DOM changes at once.</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">3</span>JSX<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">JSX (JavaScript XML) is a syntax extension that lets you write HTML-like markup directly inside JavaScript. It gets compiled (via Babel) into <code class="inline">React.createElement()</code> calls.</div>
+<div class="keypoints">
+<div class="title">Key Points</div>
+<ul>
+<li>Must return a <b>single root element</b> (or use a Fragment <code class="inline">&lt;&gt;...&lt;/&gt;</code>).</li>
+<li>Use <code class="inline">{ }</code> to embed JS expressions.</li>
+<li>Use <code class="inline">className</code> instead of <code class="inline">class</code>, and <code class="inline">camelCase</code> for attributes like <code class="inline">onClick</code>, <code class="inline">tabIndex</code>.</li>
+</ul>
+</div>
+<pre>const name = "Riya";
+const element = (
+  &lt;div className="card"&gt;
+    &lt;h1&gt;Hello, {name}!&lt;/h1&gt;
+    {name.length &gt; 3 &amp;&amp; &lt;p&gt;Long name&lt;/p&gt;}
+  &lt;/div&gt;
+);
+// Compiles roughly to:
+// React.createElement("div", {className:"card"}, ...)</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: Is JSX required to use React?</div>
+<div class="a">A: No — it's optional syntactic sugar. You can write React.createElement() calls directly, but JSX is far more readable and is the standard convention.</div>
+<div class="q">Q: Why className instead of class?</div>
+<div class="a">A: Because "class" is a reserved keyword in JavaScript, so JSX uses className to avoid collision (it maps to the DOM's class attribute).</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">4</span>Components &amp; Functional Components<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">Components are independent, reusable pieces of UI. Modern React uses <b>Functional Components</b> (plain JS functions returning JSX) combined with Hooks, instead of the older Class Components.</div>
+<pre>function Welcome({ name }) {
+  return &lt;h1&gt;Hello, {name}&lt;/h1&gt;;
+}
+// or as an arrow function
+const Welcome2 = ({ name }) =&gt; &lt;h1&gt;Hello, {name}&lt;/h1&gt;;
+
+// usage
+&lt;Welcome name="Riya" /&gt;</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: Functional vs Class components?</div>
+<div class="a">A: Functional components are plain functions, use Hooks for state/lifecycle, and are simpler and shorter. Class components use ES6 classes, `this.state`, and lifecycle methods (componentDidMount, etc.). Functional + Hooks is now the standard.</div>
+<div class="q">Q: What are the rules for naming components?</div>
+<div class="a">A: Component names must start with a capital letter (PascalCase) so React can distinguish them from regular HTML tags.</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">5</span>React Project Setup<span class="tag next">NEXT</span></div>
+<div class="topic-body">
+<div class="def">Modern React apps are typically scaffolded with Vite (or Create React App historically) and use <code class="inline">npm</code> to manage dependencies listed in <code class="inline">package.json</code>.</div>
+<div class="keypoints">
+<div class="title">Key Points</div>
+<ul>
+<li><code class="inline">package.json</code> — lists project dependencies, scripts, and metadata.</li>
+<li><code class="inline">node_modules/</code> — where installed packages actually live (never edited manually, never committed to git).</li>
+<li><code class="inline">createRoot(document.getElementById("root")).render(&lt;App /&gt;)</code> — the React 18+ way to mount your app into the DOM.</li>
+</ul>
+</div>
+<pre>// main.jsx
+import { createRoot } from "react-dom/client";
+import App from "./App.jsx";
+
+createRoot(document.getElementById("root")).render(&lt;App /&gt;);</pre>
+</div>
+</div>
+
+<div class="level-divider">
+<h1>Section B &mdash; Components, Props &amp; State</h1>
+<p>The daily bread-and-butter of React development. Expect live-coding questions here.</p>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">6</span>Props<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">Props ("properties") are <b>read-only</b> data passed from a parent component to a child component, used to configure/customize it.</div>
+<div class="keypoints">
+<div class="title">Key Points</div>
+<ul>
+<li>Props are <b>immutable</b> inside the child — a child must never modify its own props.</li>
+<li><code class="inline">children</code> is a special prop containing whatever is nested between a component's opening/closing tags.</li>
+<li>Default values can be set via default parameters in destructuring.</li>
+</ul>
+</div>
+<pre>function Card({ title, children, theme = "light" }) {
+  return (
+    &lt;div className={`card ${theme}`}&gt;
+      &lt;h2&gt;{title}&lt;/h2&gt;
+      {children}
+    &lt;/div&gt;
+  );
+}
+// usage
+&lt;Card title="Profile"&gt;
+  &lt;p&gt;This is child content&lt;/p&gt;
+&lt;/Card&gt;</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: Props vs State?</div>
+<div class="a">A: Props are passed IN from a parent and are read-only (external, immutable). State is managed WITHIN the component itself and can change over time (internal, mutable via setState/useState).</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">7</span>State &amp; useState<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">State is data local to a component that, when updated, triggers a re-render. <code class="inline">useState</code> is the Hook used to add state to functional components.</div>
+<pre>import { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+  return (
+    &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+      Count: {count}
+    &lt;/button&gt;
+  );
+}</pre>
+<div class="keypoints">
+<div class="title">Key Points</div>
+<ul>
+<li><code class="inline">useState(initialValue)</code> returns <code class="inline">[currentValue, setterFunction]</code>.</li>
+<li>Calling the setter schedules a re-render; state updates are <b>asynchronous</b> (batched).</li>
+<li>Use the <b>functional update</b> form when new state depends on old state: <code class="inline">setCount(prev =&gt; prev + 1)</code> — avoids stale-state bugs.</li>
+</ul>
+</div>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: Why use setCount(prev => prev + 1) instead of setCount(count + 1)?</div>
+<div class="a">A: React batches state updates, so multiple calls using the stale `count` variable in the same event handler can overwrite each other. The functional form always receives the latest state value, avoiding race conditions.</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">8</span>State Immutability &amp; Updating Nested Data<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">React detects changes by comparing references, so state (objects/arrays) must always be updated by creating a <b>new copy</b> — never mutated directly — or React won't detect the change and re-render.</div>
+<pre>const [user, setUser] = useState({ name: "Riya", age: 22 });
+// WRONG: user.age = 23; setUser(user);  -&gt; same reference, no re-render!
+
+// CORRECT:
+setUser(prev =&gt; ({ ...prev, age: 23 }));
+
+const [items, setItems] = useState([1, 2, 3]);
+setItems(prev =&gt; [...prev, 4]);          // add
+setItems(prev =&gt; prev.filter(i =&gt; i !== 2)); // remove
+setItems(prev =&gt; prev.map(i =&gt; i === 1 ? 100 : i)); // update</pre>
+<div class="remember">
+<div class="title">Remember</div>
+<ul>
+<li>Never do arr.push() or obj.x = y directly on state — always spread/copy first.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">9</span>Conditional Rendering<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">Rendering different UI based on a condition, using plain JavaScript logic inside JSX.</div>
+<pre>function Status({ isLoggedIn, isLoading }) {
+  if (isLoading) return &lt;Spinner /&gt;;
+  return (
+    &lt;div&gt;
+      {isLoggedIn ? &lt;p&gt;Welcome back!&lt;/p&gt; : &lt;p&gt;Please log in&lt;/p&gt;}
+      {isLoggedIn &amp;&amp; &lt;LogoutButton /&gt;}
+    &lt;/div&gt;
+  );
+}</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: Any gotcha with the && operator in JSX?</div>
+<div class="a">A: If the left side is 0 (a falsy number, not boolean), React renders the literal "0" on screen instead of nothing. Fix: convert to boolean, e.g. count > 0 && ..., or use a ternary.</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">10</span>Lists, Keys &amp; Rendering Arrays<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">Rendering a list of elements from an array using <code class="inline">.map()</code>. Each rendered item needs a unique <code class="inline">key</code> prop so React can efficiently track it during reconciliation.</div>
+<pre>const users = [{id:1, name:"A"}, {id:2, name:"B"}];
+&lt;ul&gt;
+  {users.map(user =&gt; (
+    &lt;li key={user.id}&gt;{user.name}&lt;/li&gt;
+  ))}
+&lt;/ul&gt;</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: Why should you avoid using array index as key?</div>
+<div class="a">A: If items are reordered, inserted, or removed, index-based keys don't stay tied to the same item, causing React to misidentify elements — leading to incorrect UI state, broken animations, or unnecessary re-renders. Use a stable unique ID instead.</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">11</span>Events &amp; Event Object<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">React wraps native DOM events into a cross-browser <b>SyntheticEvent</b> object, accessed via camelCase handler props like <code class="inline">onClick</code>, <code class="inline">onChange</code>.</div>
+<pre>function Form() {
+  function handleSubmit(e) {
+    e.preventDefault(); // stop page reload
+    console.log("Submitted");
+  }
+  function handleClick(id, e) {
+    console.log("Clicked item", id, e.target);
+  }
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;button onClick={(e) =&gt; handleClick(1, e)}&gt;Click&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: How do you pass arguments to an event handler?</div>
+<div class="a">A: Wrap the call in an inline arrow function: onClick={() => handleClick(id)} — calling handleClick(id) directly would invoke it immediately during render instead of on click.</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">12</span>Forms &amp; Controlled Components<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">A "controlled component" is a form input whose value is driven entirely by React state — the input's <code class="inline">value</code> comes from state, and <code class="inline">onChange</code> updates that state, making React the "single source of truth".</div>
+<pre>function LoginForm() {
+  const [form, setForm] = useState({ email: "", password: "" });
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setForm(prev =&gt; ({ ...prev, [name]: value }));
+  }
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log(form);
+  }
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;input name="email" value={form.email} onChange={handleChange} /&gt;
+      &lt;input name="password" type="password" value={form.password} onChange={handleChange} /&gt;
+      &lt;button type="submit"&gt;Login&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: Controlled vs Uncontrolled components?</div>
+<div class="a">A: Controlled components store input value in React state (React is source of truth, full control/validation). Uncontrolled components let the DOM manage its own state internally, accessed via a ref (e.g. useRef) only when needed — less code but less control.</div>
+</div>
+</div>
+</div>
+
+<div class="level-divider">
+<h1>Section C &mdash; Hooks Deep Dive</h1>
+<p>Hooks questions are almost guaranteed in every React interview. useEffect and useState get asked the most.</p>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">13</span>Rules of Hooks<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">Two strict rules that ensure Hooks work correctly, because React relies on the <b>call order</b> of Hooks to associate state with a component instance.</div>
+<div class="keypoints">
+<div class="title">Key Points</div>
+<ul>
+<li>Rule 1: Only call Hooks at the <b>top level</b> — never inside loops, conditions, or nested functions.</li>
+<li>Rule 2: Only call Hooks from <b>React function components</b> or custom Hooks — never regular JS functions.</li>
+</ul>
+</div>
+<pre>// WRONG
+if (isLoggedIn) {
+  const [data, setData] = useState(null); // breaks hook order!
+}
+
+// CORRECT
+const [data, setData] = useState(null);
+if (isLoggedIn) { /* use data */ }</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: Why can't hooks be called conditionally?</div>
+<div class="a">A: React tracks hooks by the order they're called in, across renders. Calling one conditionally can shift that order between renders, causing React to associate the wrong state/effect with the wrong hook call.</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">14</span>useEffect<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">A Hook for running <b>side effects</b> (data fetching, subscriptions, timers, manual DOM changes) in function components — it replaces class lifecycle methods like componentDidMount/Update/Unmount.</div>
+<div class="keypoints">
+<div class="title">Key Points</div>
+<ul>
+<li><code class="inline">useEffect(fn)</code> — no deps array → runs after <b>every</b> render.</li>
+<li><code class="inline">useEffect(fn, [])</code> — empty array → runs <b>once</b> on mount only.</li>
+<li><code class="inline">useEffect(fn, [dep1, dep2])</code> — runs on mount + whenever any dependency changes.</li>
+<li>Return a <b>cleanup function</b> to unsubscribe/clear timers before the effect re-runs or the component unmounts.</li>
+</ul>
+</div>
+<pre>useEffect(() =&gt; {
+  const timer = setInterval(() =&gt; console.log("tick"), 1000);
+  return () =&gt; clearInterval(timer); // cleanup
+}, []);
+
+// API call pattern
+useEffect(() =&gt; {
+  let ignore = false;
+  async function loadUser() {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/users/${id}`);
+      const data = await res.json();
+      if (!ignore) setUser(data);
+    } catch (e) {
+      if (!ignore) setError(e.message);
+    } finally {
+      if (!ignore) setLoading(false);
+    }
+  }
+  loadUser();
+  return () =&gt; { ignore = true; }; // avoid setting state after unmount
+}, [id]);</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: What causes an infinite loop with useEffect?</div>
+<div class="a">A: Updating state inside the effect without a proper dependency array (or including an object/array/function recreated fresh every render as a dependency) causes the effect to re-run after every render, updating state again, forever.</div>
+<div class="q">Q: Why is a cleanup function important?</div>
+<div class="a">A: Without it, timers, subscriptions, or event listeners from a previous render/mount keep running even after the component unmounts or the effect re-runs — causing memory leaks and "setState on unmounted component" warnings.</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">15</span>useRef<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">Returns a mutable ref object (<code class="inline">{ current: ... }</code>) that <b>persists across renders</b> without causing a re-render when changed. Commonly used to directly access DOM elements.</div>
+<pre>function TextInput() {
+  const inputRef = useRef(null);
+  function focusInput() { inputRef.current.focus(); }
+  return (
+    &lt;&gt;
+      &lt;input ref={inputRef} /&gt;
+      &lt;button onClick={focusInput}&gt;Focus&lt;/button&gt;
+    &lt;/&gt;
+  );
+}
+
+// storing a mutable value that doesn't trigger re-render
+function Timer() {
+  const countRef = useRef(0);
+  useEffect(() =&gt; {
+    const id = setInterval(() =&gt; { countRef.current++; }, 1000);
+    return () =&gt; clearInterval(id);
+  }, []);
+}</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: useRef vs useState?</div>
+<div class="a">A: Updating state (useState) triggers a re-render; updating a ref (useRef) does NOT trigger a re-render and persists silently across renders. Use state for anything shown in the UI, refs for values you need to track without re-rendering (timers, previous values, DOM nodes).</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">16</span>useReducer<span class="tag next">NEXT</span></div>
+<div class="topic-body">
+<div class="def">An alternative to useState for managing more <b>complex state logic</b> — especially when the next state depends on multiple sub-values or the previous state, following a Redux-like pattern.</div>
+<pre>function reducer(state, action) {
+  switch (action.type) {
+    case "increment": return { count: state.count + 1 };
+    case "decrement": return { count: state.count - 1 };
+    case "reset": return { count: 0 };
+    default: throw new Error("Unknown action");
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, { count: 0 });
+  return (
+    &lt;&gt;
+      &lt;p&gt;{state.count}&lt;/p&gt;
+      &lt;button onClick={() =&gt; dispatch({ type: "increment" })}&gt;+&lt;/button&gt;
+      &lt;button onClick={() =&gt; dispatch({ type: "decrement" })}&gt;-&lt;/button&gt;
+    &lt;/&gt;
+  );
+}</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: When would you use useReducer over useState?</div>
+<div class="a">A: When state has multiple related sub-values, complex update logic, or the next state depends heavily on the action type — useReducer centralizes that logic and makes state transitions more predictable/testable.</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">17</span>useMemo &amp; useCallback<span class="tag next">NEXT</span></div>
+<div class="topic-body">
+<div class="def">Both are <b>memoization</b> hooks used for performance optimization. <code class="inline">useMemo</code> memoizes a computed <b>value</b>; <code class="inline">useCallback</code> memoizes a <b>function</b> reference.</div>
+<pre>const expensiveResult = useMemo(() =&gt; {
+  return heavyComputation(items);
+}, [items]); // only recompute when items changes
+
+const handleClick = useCallback(() =&gt; {
+  doSomething(id);
+}, [id]); // same function reference unless id changes</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: useMemo vs useCallback?</div>
+<div class="a">A: useMemo caches the RESULT of a computation. useCallback caches the FUNCTION itself (equivalent to useMemo(() => fn, deps)). Both are used to avoid unnecessary recalculation/re-creation on every render, and to prevent unnecessary re-renders of memoized child components.</div>
+<div class="q">Q: Should you use useMemo everywhere for optimization?</div>
+<div class="a">A: No — memoization itself has a cost (memory + comparison). Only use it for genuinely expensive computations or to stabilize references passed to memoized children/effects; overusing it can make code slower and harder to read.</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">18</span>Custom Hooks<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">A custom Hook is a reusable JavaScript function (prefixed with <code class="inline">use</code>) that packages up stateful logic (usually built from other Hooks) so it can be shared across multiple components.</div>
+<pre>function useFetch(url) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() =&gt; {
+    setLoading(true);
+    fetch(url)
+      .then(res =&gt; res.json())
+      .then(setData)
+      .catch(setError)
+      .finally(() =&gt; setLoading(false));
+  }, [url]);
+
+  return { data, loading, error };
+}
+
+// usage in any component
+function Profile() {
+  const { data, loading, error } = useFetch("/api/profile");
+  if (loading) return &lt;Spinner /&gt;;
+  if (error) return &lt;p&gt;Error!&lt;/p&gt;;
+  return &lt;p&gt;{data.name}&lt;/p&gt;;
+}</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: Why build custom hooks?</div>
+<div class="a">A: To extract and reuse stateful logic (like data fetching, form handling, debouncing) across multiple components without duplicating code, keeping components focused purely on rendering UI.</div>
+</div>
+</div>
+</div>
+
+<div class="level-divider">
+<h1>Section D &mdash; Component Communication &amp; State Management</h1>
+<p>How data flows across a React app as it grows beyond a single component.</p>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">19</span>Prop Drilling &amp; Lifting State Up<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def"><b>Lifting state up</b> means moving shared state to the closest common parent so sibling components can access/update it via props. <b>Prop drilling</b> is the resulting problem of passing props down through many intermediate components that don't need them.</div>
+<pre>function Parent() {
+  const [count, setCount] = useState(0);
+  return (
+    &lt;&gt;
+      &lt;DisplayCount count={count} /&gt;
+      &lt;IncrementButton onIncrement={() =&gt; setCount(c =&gt; c + 1)} /&gt;
+    &lt;/&gt;
+  );
+}
+// Child -> Parent communication via a callback prop
+function IncrementButton({ onIncrement }) {
+  return &lt;button onClick={onIncrement}&gt;+1&lt;/button&gt;;
+}</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: How do child components communicate back to a parent?</div>
+<div class="a">A: The parent passes a callback function down as a prop; the child calls that function (optionally with data) when something happens, and the parent updates its own state in response.</div>
+<div class="q">Q: How do you fix prop drilling?</div>
+<div class="a">A: Use the Context API to make data available directly to deeply nested components without passing it through every intermediate layer, or use a state management library like Redux for larger apps.</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">20</span>Context API<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">A built-in React feature to share data (like theme, auth user, language) across the component tree <b>without manually passing props at every level</b>.</div>
+<pre>const ThemeContext = createContext();
+
+function App() {
+  const [theme, setTheme] = useState("light");
+  return (
+    &lt;ThemeContext.Provider value={{ theme, setTheme }}&gt;
+      &lt;Toolbar /&gt;
+    &lt;/ThemeContext.Provider&gt;
+  );
+}
+
+function Toolbar() {
+  const { theme, setTheme } = useContext(ThemeContext);
+  return (
+    &lt;button onClick={() =&gt; setTheme(theme === "light" ? "dark" : "light")}&gt;
+      Current: {theme}
+    &lt;/button&gt;
+  );
+}</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: Context API vs Redux?</div>
+<div class="a">A: Context API is built into React, best for simple/low-frequency global data (theme, auth user, locale). Redux is a dedicated external state management library with predictable update patterns, middleware, and devtools — better suited for large apps with complex, frequently-updating shared state.</div>
+<div class="q">Q: Any downside of Context API?</div>
+<div class="a">A: Every component consuming a context re-renders whenever the context value changes, even if it only cares about part of that value — this can cause unnecessary re-renders in large apps if not split carefully.</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">21</span>Redux &amp; Redux Toolkit<span class="tag next">NEXT</span></div>
+<div class="topic-body">
+<div class="def">Redux is a predictable state container: a single centralized <b>store</b> holds app state, updated only via dispatched <b>actions</b> processed by pure <b>reducer</b> functions. Redux Toolkit (RTK) is the modern, recommended way to write Redux with much less boilerplate.</div>
+<div class="keypoints">
+<div class="title">Key Points</div>
+<ul>
+<li><b>Store</b>: holds the whole app's state tree.</li>
+<li><b>Action</b>: a plain object describing "what happened" (<code class="inline">{type, payload}</code>).</li>
+<li><b>Reducer</b>: a pure function <code class="inline">(state, action) =&gt; newState</code>.</li>
+<li><code class="inline">createSlice()</code> — RTK helper that auto-generates action creators + reducer.</li>
+<li><code class="inline">useSelector()</code> reads state; <code class="inline">useDispatch()</code> sends actions.</li>
+</ul>
+</div>
+<pre>// counterSlice.js
+import { createSlice } from "@reduxjs/toolkit";
+
+const counterSlice = createSlice({
+  name: "counter",
+  initialState: { value: 0 },
+  reducers: {
+    increment: (state) =&gt; { state.value += 1; }, // RTK allows "mutating" syntax (uses Immer internally)
+    decrement: (state) =&gt; { state.value -= 1; },
+  },
+});
+export const { increment, decrement } = counterSlice.actions;
+export default counterSlice.reducer;
+
+// in a component
+const count = useSelector((state) =&gt; state.counter.value);
+const dispatch = useDispatch();
+dispatch(increment());</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: What is Redux Thunk used for?</div>
+<div class="a">A: Middleware that lets action creators return a function (instead of a plain object) to handle async logic like API calls, dispatching further actions once the async work resolves.</div>
+</div>
+</div>
+</div>
+
+<div class="level-divider">
+<h1>Section E &mdash; Routing</h1>
+<p>React Router is the standard for multi-page navigation in an SPA.</p>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">22</span>React Router Essentials<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">A library that enables client-side navigation between different "pages" (views) within a Single Page Application, without full browser reloads.</div>
+<pre>import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom";
+
+function App() {
+  return (
+    &lt;BrowserRouter&gt;
+      &lt;Link to="/about"&gt;About&lt;/Link&gt;
+      &lt;Routes&gt;
+        &lt;Route path="/" element={&lt;Home /&gt;} /&gt;
+        &lt;Route path="/about" element={&lt;About /&gt;} /&gt;
+        &lt;Route path="*" element={&lt;NotFound /&gt;} /&gt;  {/* 404 */}
+      &lt;/Routes&gt;
+    &lt;/BrowserRouter&gt;
+  );
+}
+
+function LoginButton() {
+  const navigate = useNavigate();
+  return &lt;button onClick={() =&gt; navigate("/dashboard")}&gt;Login&lt;/button&gt;;
+}</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: Link vs useNavigate?</div>
+<div class="a">A: Link renders an anchor tag for declarative, user-clickable navigation. useNavigate is a hook for programmatic navigation triggered by code (e.g. after form submit or a conditional check).</div>
+<div class="q">Q: NavLink vs Link?</div>
+<div class="a">A: NavLink is the same as Link but automatically adds an "active" styling/class when its path matches the current URL — useful for nav bars.</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">23</span>Dynamic &amp; Nested Routes<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">Dynamic routes capture URL segments as parameters (via <code class="inline">useParams</code>); nested routes render child routes inside a parent layout using <code class="inline">&lt;Outlet /&gt;</code>.</div>
+<pre>&lt;Route path="/users/:id" element={&lt;UserProfile /&gt;} /&gt;
+
+function UserProfile() {
+  const { id } = useParams();          // dynamic route param
+  const [searchParams] = useSearchParams(); // ?query=... params
+  return &lt;p&gt;User ID: {id}&lt;/p&gt;;
+}
+
+// Nested routes
+&lt;Route path="/dashboard" element={&lt;DashboardLayout /&gt;}&gt;
+  &lt;Route path="stats" element={&lt;Stats /&gt;} /&gt;
+  &lt;Route path="settings" element={&lt;Settings /&gt;} /&gt;
+&lt;/Route&gt;
+// DashboardLayout must render &lt;Outlet /&gt; where child routes appear</pre>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">24</span>Protected Routes<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">A pattern that restricts access to certain routes based on authentication state — redirecting unauthenticated users to a login page.</div>
+<pre>function ProtectedRoute({ children }) {
+  const { isAuthenticated } = useAuth(); // custom hook/context
+  if (!isAuthenticated) return &lt;Navigate to="/login" replace /&gt;;
+  return children;
+}
+
+&lt;Route path="/dashboard" element={
+  &lt;ProtectedRoute&gt;&lt;Dashboard /&gt;&lt;/ProtectedRoute&gt;
+} /&gt;</pre>
+</div>
+</div>
+
+<div class="level-divider">
+<h1>Section F &mdash; API Integration &amp; Authentication</h1>
+<p>Almost every real-world React app talks to a backend — expect practical questions here.</p>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">25</span>Fetch / Axios &amp; HTTP Methods<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">Making HTTP requests to a REST API using the native <code class="inline">fetch()</code> or the popular <code class="inline">axios</code> library, using standard HTTP methods (GET, POST, PUT, PATCH, DELETE).</div>
+<pre>// fetch
+async function getUsers() {
+  const res = await fetch("/api/users");
+  if (!res.ok) throw new Error("Failed to fetch");
+  return res.json();
+}
+
+// axios (auto JSON parsing, throws on non-2xx by default)
+import axios from "axios";
+const { data } = await axios.get("/api/users");
+await axios.post("/api/users", { name: "Riya" }, {
+  headers: { Authorization: `Bearer ${token}` }
+});</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: fetch vs axios?</div>
+<div class="a">A: fetch is built into browsers, requires manual JSON parsing and manual error-checking (via response.ok), and doesn't reject on HTTP error codes. axios is a library that auto-parses JSON, rejects automatically on error status codes, and supports interceptors and request cancellation more easily.</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">26</span>Loading &amp; Error States<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">The standard pattern for any async data-fetching UI: track <code class="inline">loading</code>, <code class="inline">error</code>, and <code class="inline">data</code> as separate states so the UI can respond appropriately at each stage.</div>
+<pre>function UserList() {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() =&gt; {
+    fetch("/api/users")
+      .then(res =&gt; res.json())
+      .then(setUsers)
+      .catch(e =&gt; setError(e.message))
+      .finally(() =&gt; setLoading(false));
+  }, []);
+
+  if (loading) return &lt;Spinner /&gt;;
+  if (error) return &lt;p&gt;Error: {error}&lt;/p&gt;;
+  return &lt;ul&gt;{users.map(u =&gt; &lt;li key={u.id}&gt;{u.name}&lt;/li&gt;)}&lt;/ul&gt;;
+}</pre>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">27</span>Authentication (JWT &amp; Protected Routes)<span class="tag must">MUST KNOW</span></div>
+<div class="topic-body">
+<div class="def">A typical React auth flow: user logs in, backend returns a <b>JWT (JSON Web Token)</b>, the token is stored client-side and attached to subsequent API requests to prove identity.</div>
+<div class="keypoints">
+<div class="title">Key Points</div>
+<ul>
+<li><b>Access Token</b>: short-lived token used to authenticate requests.</li>
+<li><b>Refresh Token</b>: longer-lived token used to get a new access token without re-login.</li>
+<li>Store tokens in <code class="inline">localStorage</code> (persists) or <code class="inline">sessionStorage</code> (tab-only) — httpOnly cookies are more secure against XSS but need backend support.</li>
+</ul>
+</div>
+<pre>async function login(email, password) {
+  const res = await axios.post("/api/login", { email, password });
+  localStorage.setItem("token", res.data.token);
+}
+
+// Attach token to every request
+axios.interceptors.request.use(config =&gt; {
+  const token = localStorage.getItem("token");
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
+function logout() { localStorage.removeItem("token"); }</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: Is storing JWT in localStorage safe?</div>
+<div class="a">A: It's vulnerable to XSS attacks (any injected script can read localStorage). httpOnly cookies are more secure since JS can't access them directly, but require CSRF protection instead. Many real apps use a mix (short-lived access token in memory, refresh token in httpOnly cookie).</div>
+</div>
+</div>
+</div>
+
+<div class="level-divider">
+<h1>Section G &mdash; Performance &amp; Error Handling</h1>
+<p>Shows you can build production-quality, optimized apps — a strong signal in interviews.</p>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">28</span>Why Components Re-render<span class="tag next">NEXT</span></div>
+<div class="topic-body">
+<div class="def">A component re-renders when: its own state changes, its parent re-renders (by default, all children re-render too), its props change, or a subscribed context value changes.</div>
+<div class="remember">
+<div class="title">Remember</div>
+<ul>
+<li>A parent re-rendering re-renders ALL its children by default — even if their props didn't change — unless the child is wrapped in React.memo.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">29</span>React.memo, useMemo, useCallback<span class="tag next">NEXT</span></div>
+<div class="topic-body">
+<div class="def"><code class="inline">React.memo()</code> is a higher-order component that skips re-rendering a component if its props haven't changed (shallow comparison).</div>
+<pre>const UserCard = React.memo(function UserCard({ user }) {
+  console.log("Rendered:", user.name);
+  return &lt;div&gt;{user.name}&lt;/div&gt;;
+});
+// Only re-renders if the `user` prop reference actually changes</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: Why doesn't React.memo always prevent re-renders?</div>
+<div class="a">A: It does a shallow comparison of props. If a parent passes a new object/array/function on every render (even with the same values), the reference differs, so memo still re-renders — this is why useMemo/useCallback are often paired with React.memo.</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">30</span>Lazy Loading &amp; Code Splitting<span class="tag next">NEXT</span></div>
+<div class="topic-body">
+<div class="def">Splitting the app's JS bundle into smaller chunks that load <b>on demand</b> rather than all at once, improving initial load time. Done via <code class="inline">React.lazy()</code> + <code class="inline">Suspense</code>.</div>
+<pre>import { lazy, Suspense } from "react";
+
+const Dashboard = lazy(() =&gt; import("./Dashboard"));
+
+function App() {
+  return (
+    &lt;Suspense fallback={&lt;Spinner /&gt;}&gt;
+      &lt;Dashboard /&gt;
+    &lt;/Suspense&gt;
+  );
+}</pre>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">31</span>Error Boundaries<span class="tag next">NEXT</span></div>
+<div class="topic-body">
+<div class="def">A special class component that catches JavaScript errors anywhere in its child component tree during rendering, logs them, and displays a fallback UI instead of crashing the whole app.</div>
+<pre>class ErrorBoundary extends React.Component {
+  state = { hasError: false };
+  static getDerivedStateFromError() { return { hasError: true }; }
+  componentDidCatch(error, info) { console.log(error, info); }
+  render() {
+    if (this.state.hasError) return &lt;h2&gt;Something went wrong.&lt;/h2&gt;;
+    return this.props.children;
+  }
+}
+// &lt;ErrorBoundary&gt;&lt;App /&gt;&lt;/ErrorBoundary&gt;</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: Can Error Boundaries be written as function components?</div>
+<div class="a">A: No — as of now, error boundaries must be class components, since there's no Hook equivalent for getDerivedStateFromError/componentDidCatch.</div>
+</div>
+</div>
+</div>
+
+<div class="topic">
+<div class="topic-header"><span class="num">32</span>Debouncing &amp; Throttling<span class="tag next">NEXT</span></div>
+<div class="topic-body">
+<div class="def"><b>Debouncing</b> delays execution until a pause in activity (e.g. wait until user stops typing). <b>Throttling</b> limits execution to at most once per fixed interval, regardless of how often the event fires.</div>
+<pre>function useDebounce(value, delay) {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() =&gt; {
+    const timer = setTimeout(() =&gt; setDebounced(value), delay);
+    return () =&gt; clearTimeout(timer);
+  }, [value, delay]);
+  return debounced;
+}
+// usage: const debouncedSearch = useDebounce(searchTerm, 500);</pre>
+<div class="qa">
+<div class="title">Interview Q&amp;A</div>
+<div class="q">Q: When would you use debouncing in React?</div>
+<div class="a">A: Search-as-you-type inputs — to avoid firing an API call on every keystroke, wait until the user pauses typing for e.g. 300-500ms before making the request.</div>
+</div>
+</div>
+</div>
+
+</body>
+</html>
